@@ -46,5 +46,5 @@ struct test *add_test() {
 
 void summary(){
 	printf("*********************\n");
-	printf("total:\t%d\n", 
+	printf("total:\t%d\n", );
 }
