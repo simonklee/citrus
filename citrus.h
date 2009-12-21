@@ -6,9 +6,9 @@
 #define false 0
 
 // functions.
-void init();
 int assert(int value);
 int equals(int expected, int actual);
 int equals_t(int expected, int actual, int truth);
 void summary();
+
 #endif

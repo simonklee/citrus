@@ -6,7 +6,7 @@ void test_assert();
 void test_equals();
 
 int main(int argc, char *argv[]) {
-	init();	
+
 	test_assert();
 	test_equals();
 	summary();
