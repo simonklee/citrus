@@ -3,11 +3,14 @@
 #include "citrus.h"
 
 int main(int argc, char *argv[]) {
-	struct suit *suit;
+	
 	init();
 	//printf("tests run: %d\n", suit->total);
 	assert(1);
+	assert(0);
+	assert(0);
 	//printf("tests run: %d\n", suit->total);
+	summary();
 	return 0;
 }
 

@@ -4,8 +4,8 @@
 
 // structs.
 struct test {
-	int	pass;
-	struct test *next;
+	int pass;
+	struct test *prev;
 };
 
 struct suit {
@@ -16,6 +16,5 @@ struct suit {
 // functions.
 void init();
 void assert(int value);
-
 
 #endif
