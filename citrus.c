@@ -4,37 +4,33 @@
 #include "citrus.h"
 
 // structs.
-struct test {
+/*struct test {
 	int pass;
 	struct test *prev;
 };
-
 struct suit {
 	int started;
 	int total;
 	struct test *tests;
-};
-
-// structures.
-struct suit suit, *suit_ptr;
+};*/
+//struct suit suit, *suit_ptr;
 
 // functions.
-static struct test *add_test();
-static void init();
+static test *add_test(suit *s);
 
 // is it true?
-int assert(int value) {
-	return equals_t(true, value, true);
+int assert(suit *s, int value) {
+	return equals_t(s, true, value, true);
 }
 
 // does it match?
-int equals(int expected, int actual) {
-	equals_t(expected, actual, true);
+int equals(suit *s, int expected, int actual) {
+	equals_t(s, expected, actual, true);
 }
 
 // does it match, are you sure?
-int equals_t(int expected, int actual, int truth) {
-	struct test *t = add_test();
+int equals_t(suit *s, int expected, int actual, int truth) {
+	test *t = add_test(s);
 	if((expected == actual) == truth){
 		t->pass = true;
 		return true;
@@ -45,9 +41,9 @@ int equals_t(int expected, int actual, int truth) {
 }
 
 // do these characters match?
-int equals_a(void *key, void *base, int n, int elm_size) {
+int equals_a(suit *s, void *key, void *base, int n, int elm_size) {
 	int i, j;
-	struct test *t = add_test();
+	test *t = add_test(s);
 		
 	for(i = 0; i < n; i++) {
 		void *key_addr = (char *)key + i * elm_size;
@@ -60,31 +56,11 @@ int equals_a(void *key, void *base, int n, int elm_size) {
 	t->pass = true;
 	return true;
 }
-// do these characters match?
-/*int equals_a(char *a[], char *b[]) {
-	int i, len;
-	struct test *t = add_test();
-	
-	if((len = sizeof(a)/sizeof(a[0])) != (sizeof(b)/sizeof(b[0]))){
-		t->pass = false;
-		return false;
-	}
-		
-	for(i = 0; i < len; i++) {
-		if(a[i] != b[i]) {
-			t->pass = false;
-			return false;
-		}
-	}
-	
-	t->pass = true;
-	return true;
-}*/
 
 // Print a summary of the text 
-void summary(){
+void summary(suit* s){
 	int pass = 0, fail = 0;
-	struct test *heads = suit_ptr->tests;
+	test *heads = s->tests;
 	printf("*********************\n");
 	while(heads) {
 		if(heads->pass == true)
@@ -94,33 +70,33 @@ void summary(){
 		heads = heads->prev;
 	}
 	printf("pass: %d, fail: %d\n", pass, fail);
-	printf("total: %d\n\n", suit_ptr->total);
+	printf("total: %d\n\n", s->total);
 }
 
 // Initilize our list and add a empty test case.
-static void init() {
-	suit_ptr = &suit;
-	memset(suit_ptr, 0, sizeof *suit_ptr);
+void init(suit *s) {
+	memset(s, 0, sizeof *s);
 }
 
 // Create a new node for our tests, add it to list.
-static struct test *add_test() {
-	struct test *node;
+static test *add_test(suit *s) {
+	test t, *node;
+	node = &t;
+	//node = (struct test*)malloc(sizeof(*node));
 	
-	node = (struct test*)malloc(sizeof(struct test));
 	memset(node, 0, sizeof node);
 	
-	if(suit_ptr == NULL){
-		init();
-		suit_ptr->tests = node;
+	if(s->tests == 0){
+		//init();
+		s->tests = node;
 	} else {
-		node->prev = suit_ptr->tests; // link it.
-		suit_ptr->tests = node; // set last test as head.
+		node->prev = s->tests; // link it.
+		s->tests = node; // set last test as head.
 	}
-	suit_ptr->total++; // increment test cases.
-	suit_ptr->tests = node; // the new node is set as head.
+	s->total++; // increment test cases.
+	s->tests = node; // the new node is set as head.
 	
-	return suit_ptr->tests; // return head. 
+	return s->tests; // return head. 
 }
 
 
