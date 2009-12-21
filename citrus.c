@@ -30,15 +30,15 @@ int equals_t(suit *s, int expected, int actual, int truth) {
 
 // match a generic set of datatype's stored in two arrays.
 // use functions(void *, void *) as comparators. 
-int equals_a(suit *s, void *key, void *base, int n, int elmsize, 
+int equals_a(suit *s, void *a, void *b, int n, int elmsize, 
 	int (*callback)(void *, void*)) {
 	
 	int i;
 	test *t = addtest(s);
 	for(i = 0; i < n; i++) {
-		void *keyaddr = (char *)key + i * elmsize;
-		void *elmaddr = (char*)base + i * elmsize;
-		if(callback(keyaddr, elmaddr) != 0){
+		void *aaddr = (char *)a + i * elmsize;
+		void *baddr = (char*)b + i * elmsize;
+		if(callback(aaddr, baddr) != 0){
 			t->pass = false;
 			return false;
 		}

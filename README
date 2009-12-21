@@ -1,3 +1,8 @@
 A small testing API for my c projects.
 
+Currently supports some comparison functions
+and a limited range of support if a test fails.
+
+Todo: add better feedback and make more tests.
+
 Inspired by Alexander Teinum's Lime.
