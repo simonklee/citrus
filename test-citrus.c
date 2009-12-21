@@ -5,8 +5,11 @@
 
 void test_assert();
 void test_equals();
-void *match(void *key, void *base, int n, int elm_size);
 
+void *match(void *key, void *base, int n, int elm_size);
+void *match2(void *key, void *base, int n, int elm_size, 
+	int (*callback)(void *, void*));
+int int_cmp(void *a, void *b);
 int main(int argc, char *argv[]) {
 
 	test_assert();
@@ -33,7 +36,7 @@ void test_equals() {
 	
 	equals_a(&a, &b, n, sizeof(int));
 	
-	if((m = match(&b, &a, n, sizeof(int))) != NULL){
+	if((m = match(&b, a, n, sizeof(int))) != NULL){
 		printf("m equals: %d\n", *m);
 	}
 }
@@ -63,3 +66,16 @@ void *match(void *key, void *base, int n, int elm_size) {
 	}
 	return NULL;
 }
+
+void *match2(void *key, void *base, int n, int elm_size, 
+	int (*callback)(void *, void*)) {
+	int i;
+	for(i = 0; i < n; i++) {
+		void *elm_addr = (char*)base + i *elm_size;
+		if(callback(key, elm_addr) == 0){
+			return elm_addr;
+		}
+	}
+	return NULL;
+}
+
