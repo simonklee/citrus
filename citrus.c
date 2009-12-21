@@ -22,7 +22,7 @@ struct suit suit, *suit_ptr;
 static struct test *add_test();
 static void init();
 
-// Is it true?
+// is it true?
 int assert(int value) {
 	return equals_t(true, value, true);
 }
@@ -32,7 +32,7 @@ int equals(int expected, int actual) {
 	equals_t(expected, actual, true);
 }
 
-// are you sure?
+// does it match, are you sure?
 int equals_t(int expected, int actual, int truth) {
 	struct test *t = add_test();
 	if((expected == actual) == truth){
@@ -43,6 +43,43 @@ int equals_t(int expected, int actual, int truth) {
 		return false;
 	}		
 }
+
+// do these characters match?
+int equals_a(void *key, void *base, int n, int elm_size) {
+	int i, j;
+	struct test *t = add_test();
+		
+	for(i = 0; i < n; i++) {
+		void *key_addr = (char *)key + i * elm_size;
+		void *elm_addr = (char *)base + i * elm_size;
+		if(memcmp(key_addr, elm_addr, elm_size) != 0){
+			t->pass = false;
+			return false;
+		}
+	}
+	t->pass = true;
+	return true;
+}
+// do these characters match?
+/*int equals_a(char *a[], char *b[]) {
+	int i, len;
+	struct test *t = add_test();
+	
+	if((len = sizeof(a)/sizeof(a[0])) != (sizeof(b)/sizeof(b[0]))){
+		t->pass = false;
+		return false;
+	}
+		
+	for(i = 0; i < len; i++) {
+		if(a[i] != b[i]) {
+			t->pass = false;
+			return false;
+		}
+	}
+	
+	t->pass = true;
+	return true;
+}*/
 
 // Print a summary of the text 
 void summary(){
