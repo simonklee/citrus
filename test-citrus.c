@@ -6,6 +6,7 @@
 void test_assert();
 void test_equals();
 void *match(void *key, void *base, int n, int elm_size);
+
 int main(int argc, char *argv[]) {
 
 	test_assert();
@@ -24,13 +25,13 @@ void test_equals() {
 	equals(true, true);
 	equals(100, 100);
 	equals_t(false, true, false);
-	/*char *a[] = {1, 2};
-	char *b[] = {1, 2};
-	equals_a(&a, &b);*/
+
 	int *m;
-	int n = 2;
+	const int n = 2;
 	int a[2] = {5, 4};
 	int b[2] = {5, 4};
+	
+	equals_a(&a, &b, n, sizeof(int));
 	
 	if((m = match(&b, &a, n, sizeof(int))) != NULL){
 		printf("m equals: %d\n", *m);
@@ -50,3 +51,15 @@ void swap2 (void *vp1, void *vp2, int size) {
 	memcpy(vp2, buffer, size);
 }
 
+// do a linear search on an array of which we dont know the type.
+// return the element which is a match. 
+void *match(void *key, void *base, int n, int elm_size) {
+	int i, j;
+	for(i = 0; i < n; i++) {
+		void *key_addr = (char *)key + i * elm_size;
+		void *elm_addr = (char *)base + i * elm_size;
+		if(memcmp(key_addr, elm_addr, elm_size) != 0)
+			return elm_addr;
+	}
+	return NULL;
+}
