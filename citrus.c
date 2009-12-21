@@ -16,7 +16,7 @@ struct test *add_test();
 void init() {
 	suit_ptr = &suit;
 	memset(suit_ptr, 0, sizeof *suit_ptr);
-	suit.tests = add_test();
+	//suit.tests = add_test();
 }
 
 // Is it true?
@@ -32,33 +32,33 @@ void assert(int value) {
 
 // Create a new node for our tests, add it to list.
 struct test *add_test() {
-	struct test *node, *head;
+	struct test *node;
 	
 	node = (struct test*)malloc(sizeof(struct test));
 	memset(node, 0, sizeof node);
 	
 	if(suit_ptr->tests == 0){
-		head = node;
+		suit_ptr->tests = node;
 	} else {
-		head = suit_ptr->tests; // set last test as head.
-		node->prev = head; // link it.
+		node->prev = suit_ptr->tests; // link it.
+		suit_ptr->tests = node; // set last test as head.
 	}
 	suit_ptr->total++; // increment test cases.
 	suit_ptr->tests = node; // the new node is set as head.
 	
-	return head; // return head. 
+	return suit_ptr->tests; // return head. 
 }
 
 void summary(){
 	int pass = 0, fail = 0;
-	struct test *head = suit_ptr->tests;
+	struct test *heads = suit_ptr->tests;
 	printf("*********************\n");
-	while(head) {
-		if(head->pass == true)
+	while(heads) {
+		if(heads->pass == true)
 			pass++;
-		else if(head->pass == false)
+		else if(heads->pass == false)
 			fail++;
-		head = head->prev;
+		heads = heads->prev;
 	}
 	printf("pass: %d, fail: %d\n", pass, fail);
 	printf("total: %d\n\n", suit_ptr->total);

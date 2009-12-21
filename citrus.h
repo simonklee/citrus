@@ -16,5 +16,5 @@ struct suit {
 // functions.
 void init();
 void assert(int value);
-
+void summary();
 #endif
