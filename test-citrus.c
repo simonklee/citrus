@@ -1,35 +1,48 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "citrus.h"
 
-void test_assert();
-void test_equals();
-void *match(void *key, void *base, int n, int elm_size);
+void testassert(suit *s);
+void testequals(suit *s);
 
 int main(int argc, char *argv[]) {
-
-	test_assert();
-	test_equals();
-	summary();
+	suit *sp;
+	
+	// allocate memory
+	sp = malloc(sizeof *sp);
+	memset(sp, 0, sizeof *sp);
+	
+	// run tests.
+	testassert(sp);
+	testequals(sp);
+	
+	// view summary.
+	summary(sp);
 	
 	return 0;
 }
 
-void test_assert() {
-	assert(1);
+void testassert(suit *s) {
+	assert(s, 1);
 }
 
-void test_equals() {
-	equals(false, false);
-	equals(true, true);
-	equals(100, 100);
-	equals_t(false, true, false);
-
-	int *m;
-	const int n = 2;
+void testequals(suit* s) {
+	
+	equals(s, false, false);
+	equals(s, true, true);
+	equals(s, 100, 100);
+	
+	equals_t(s, false, true, false);
+	
 	int a[2] = {5, 4};
 	int b[2] = {5, 4};
 	
-	equals_a(&a, &b, n, sizeof(int));
+	equals_a(s, &b, &a, 2, sizeof(int), integercmp);
+	
+	char *txt1[] = {"Abc", "Def", "Ghi", "Jkl"};
+	char *txt2[] = {"Abc", "Def", "Ghi", "Jkl"};
+	
+	equals_a(s, &txt2, txt1, 4, sizeof(char *), stringcmp);
 }

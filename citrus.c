@@ -3,38 +3,22 @@
 #include <string.h>
 #include "citrus.h"
 
-// structs.
-struct test {
-	int pass;
-	struct test *prev;
-};
-
-struct suit {
-	int started;
-	int total;
-	struct test *tests;
-};
-
-// structures.
-struct suit suit, *suit_ptr;
-
-// functions.
-static struct test *add_test();
-static void init();
+// (member) functions.
+static test *addtest(suit *s);
 
 // is it true?
-int assert(int value) {
-	return equals_t(true, value, true);
+int assert(suit *s, int value) {
+	return equals_t(s, true, value, true);
 }
 
 // does it match?
-int equals(int expected, int actual) {
-	equals_t(expected, actual, true);
+int equals(suit *s, int expected, int actual) {
+	equals_t(s, expected, actual, true);
 }
 
 // does it match, are you sure?
-int equals_t(int expected, int actual, int truth) {
-	struct test *t = add_test();
+int equals_t(suit *s, int expected, int actual, int truth) {
+	test *t = addtest(s);
 	if((expected == actual) == truth){
 		t->pass = true;
 		return true;
@@ -44,15 +28,17 @@ int equals_t(int expected, int actual, int truth) {
 	}		
 }
 
-// do these characters match?
-int equals_a(void *key, void *base, int n, int elm_size) {
-	int i, j;
-	struct test *t = add_test();
-		
+// match a generic set of datatype's stored in two arrays.
+// use functions(void *, void *) as comparators. 
+int equals_a(suit *s, void *key, void *base, int n, int elmsize, 
+	int (*callback)(void *, void*)) {
+	
+	int i;
+	test *t = addtest(s);
 	for(i = 0; i < n; i++) {
-		void *key_addr = (char *)key + i * elm_size;
-		void *elm_addr = (char *)base + i * elm_size;
-		if(memcmp(key_addr, elm_addr, elm_size) != 0){
+		void *keyaddr = (char *)key + i * elmsize;
+		void *elmaddr = (char*)base + i * elmsize;
+		if(callback(keyaddr, elmaddr) != 0){
 			t->pass = false;
 			return false;
 		}
@@ -61,10 +47,43 @@ int equals_a(void *key, void *base, int n, int elm_size) {
 	return true;
 }
 
-// Print a summary of the text 
-void summary(){
+int integercmp(void *a, void *b) {
+	int *ap = a;
+	int *bp = b;
+	
+	return *ap - *bp;
+}
+
+int stringcmp(void *a, void *b) {
+	char *str1 = *(char **)a;
+	char *str2 = *(char **)b;
+	
+	return strcmp(str1, str2);
+}
+
+// Create a new node for our tests, add it to list.
+static test *addtest(suit *s) {
+	test *node;
+	node = malloc(sizeof *node);
+	memset(node, 0, sizeof *node);
+	
+	// no need to link it if it is our first time.
+	if(s->tests == 0){
+		s->tests = node;
+	} else {
+		node->prev = s->tests; // link it.
+		s->tests = node; // set last test as head.
+	}
+	
+	s->total++; // increment.
+	return s->tests; // return head. 
+}
+
+// print a summary of the test's.
+void summary(suit* s){
 	int pass = 0, fail = 0;
-	struct test *heads = suit_ptr->tests;
+	test *heads = s->tests;
+	
 	printf("*********************\n");
 	while(heads) {
 		if(heads->pass == true)
@@ -74,33 +93,5 @@ void summary(){
 		heads = heads->prev;
 	}
 	printf("pass: %d, fail: %d\n", pass, fail);
-	printf("total: %d\n\n", suit_ptr->total);
+	printf("total: %d\n\n", s->total);
 }
-
-// Initilize our list and add a empty test case.
-static void init() {
-	suit_ptr = &suit;
-	memset(suit_ptr, 0, sizeof *suit_ptr);
-}
-
-// Create a new node for our tests, add it to list.
-static struct test *add_test() {
-	struct test *node;
-	
-	node = (struct test*)malloc(sizeof(struct test));
-	memset(node, 0, sizeof node);
-	
-	if(suit_ptr == NULL){
-		init();
-		suit_ptr->tests = node;
-	} else {
-		node->prev = suit_ptr->tests; // link it.
-		suit_ptr->tests = node; // set last test as head.
-	}
-	suit_ptr->total++; // increment test cases.
-	suit_ptr->tests = node; // the new node is set as head.
-	
-	return suit_ptr->tests; // return head. 
-}
-
-
