@@ -21,7 +21,7 @@ DUMPTRG=$(PROJECTNAME).s
 OBJDUMP=objdump
 
 # C flags
-CFLAGS=-I ../libs/
+CFLAGS=#-I ../libs/
 
 # Sourcefiles
 CFILES=$(filter %.c, $(PRJSRC))
