@@ -2,19 +2,13 @@
 #ifndef _CITRUS_H_
 #define _CITRUS_H_
 
-// structs.
-struct test {
-	int pass;
-	struct test *prev;
-};
-
-struct suit {
-	int total;
-	struct test *tests;
-};
+#define true 1
+#define false 0
 
 // functions.
 void init();
-void assert(int value);
+int assert(int value);
+int equals(int expected, int actual);
+int equals_t(int expected, int actual, int truth);
 void summary();
 #endif

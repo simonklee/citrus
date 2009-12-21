@@ -7,6 +7,7 @@ PROJECTNAME=citrus
 # Project sourcefiles
 PRJSRC=citrus.c\
 		citrus.h\
+		utils.c\
 		test-citrus.c\
 
 # Compiler
