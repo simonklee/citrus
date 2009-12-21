@@ -5,18 +5,29 @@
 #define true 1
 #define false 0
 
-typedef struct {
+// structures.
+typedef struct prev_test {
 	int pass;
-	struct test *prev;
+	struct prev_test *prev;
 } test;
 
 typedef struct {
 	int started;
 	int total;
-	struct test *tests;
+	struct prev_test *tests;
 } suit;
-
 
 // functions.
 int assert(suit *s, int value);
+int equals(suit *s, int expected, int actual);
+int equals_t(suit *s, int expected, int actual, int truth);
+int equals_a(suit *s, void *key, void *base, int n, int elmsize, 
+	int (*callback)(void *, void*));
+void summary(suit *s);	
+
+// functions, helpers.	
+int integercmp(void *a, void *b);
+int stringcmp(void *a, void *b);
+
+
 #endif
