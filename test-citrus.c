@@ -32,34 +32,4 @@ void test_equals() {
 	int b[2] = {5, 4};
 	
 	equals_a(&a, &b, n, sizeof(int));
-	
-	if((m = match(&b, &a, n, sizeof(int))) != NULL){
-		printf("m equals: %d\n", *m);
-	}
-}
-
-void swap (int *ap, int *bp) {
-	int tmp = *ap;
-	*ap = *bp;
-	*bp = tmp;
-}
-
-void swap2 (void *vp1, void *vp2, int size) {
-	char buffer[size];
-	memcpy(buffer, vp1, size);
-	memcpy(vp1, vp2, size);
-	memcpy(vp2, buffer, size);
-}
-
-// do a linear search on an array of which we dont know the type.
-// return the element which is a match. 
-void *match(void *key, void *base, int n, int elm_size) {
-	int i, j;
-	for(i = 0; i < n; i++) {
-		void *key_addr = (char *)key + i * elm_size;
-		void *elm_addr = (char *)base + i * elm_size;
-		if(memcmp(key_addr, elm_addr, elm_size) != 0)
-			return elm_addr;
-	}
-	return NULL;
 }
