@@ -31,15 +31,18 @@ int equals_t(suit *s, int expected, int actual, int truth) {
 // match a generic set of datatype's stored in two arrays.
 // use functions(void *, void *) as comparators. 
 int equals_a(suit *s, void *a, void *b, int n, int elmsize, 
-	int (*callback)(void *, void*)) {
+	int (*callback)(void *, void*), int line) {
 	
-	int i;
+	int i, err;
 	test *t = addtest(s);
 	for(i = 0; i < n; i++) {
 		void *aaddr = (char *)a + i * elmsize;
-		void *baddr = (char*)b + i * elmsize;
-		if(callback(aaddr, baddr) != 0){
+		void *baddr = (char *)b + i * elmsize;
+		if((err = callback(aaddr, baddr)) != 0){
 			t->pass = false;
+			//t->fault = malloc(5);
+			t->fault = &aaddr;
+			fprintf(stderr, "Error \"%s\" in line number %d\n", strerror(-err), line);
 			return false;
 		}
 	}
@@ -86,10 +89,15 @@ void summary(suit* s){
 	
 	printf("*********************\n");
 	while(heads) {
-		if(heads->pass == true)
+		if(heads->pass == true){
 			pass++;
-		else if(heads->pass == false)
+		}
+		else if(heads->pass == false){
 			fail++;
+			printf("\n");
+			//printf(((char *)heads->fault));
+			printf("\n");
+		}
 		heads = heads->prev;
 	}
 	printf("pass: %d, fail: %d\n", pass, fail);

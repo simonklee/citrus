@@ -8,6 +8,7 @@
 // structures.
 typedef struct prev_test {
 	int pass;
+	void fault;
 	struct prev_test *prev;
 } test;
 
@@ -21,8 +22,8 @@ typedef struct {
 int assert(suit *s, int value);
 int equals(suit *s, int expected, int actual);
 int equals_t(suit *s, int expected, int actual, int truth);
-int equals_a(suit *s, void *key, void *base, int n, int elmsize, 
-	int (*callback)(void *, void*));
+int equals_a(suit *s, void *a, void *b, int n, int elmsize, 
+	int (*callback)(void *, void*), int line);
 void summary(suit *s);	
 
 // functions, helpers.	
