@@ -10,23 +10,23 @@ typedef struct prev_test {
 	int pass;
 	int count;
 	struct prev_test *prev;
-} test;
+} Test;
 
 typedef struct {
 	int total;
 	struct prev_test *tests;
-} suit;
+} Suit;
 
 // functions.
-int asserts(suit *s, int value);
-int equals(suit *s, int expected, int actual);
-int equals_t(suit *s, int expected, int actual, int truth);
-int equals_a(suit *s, void *a, void *b, int n, int elmsize, 
+int Assert(Suit *s, int value);
+int Equals(Suit *s, int expected, int actual);
+int EqualsT(Suit *s, int expected, int actual, int truth);
+int EqualsA(Suit *s, void *a, void *b, int n, int elmsize, 
 	int (*callback)(void *, void*));
-void summary(suit *s);	
+void Summary(Suit *s);	
 
 // functions, helpers.	
-int integercmp(void *a, void *b);
-int stringcmp(void *a, void *b);
+int IntComp(void *a, void *b);
+int StringComp(void *a, void *b);
 
 #endif

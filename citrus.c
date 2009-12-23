@@ -4,22 +4,22 @@
 #include "citrus.h"
 
 // (member) functions.
-static test *addtest(suit *s);
+static Test *addTest(Suit *s);
 
-// is it true?
-int asserts(suit *s, int value) {
-	return equals_t(s, true, value, true);
+// Is it true?
+int Assert(Suit *s, int value) {
+	return EqualsT(s, true, value, true);
 }
 
-// does it match?
-int equals(suit *s, int expected, int actual) {
-	return equals_t(s, expected, actual, true);
+// Does it match?
+int Equals(Suit *s, int expected, int actual) {
+	return EqualsT(s, expected, actual, true);
 }
 
-// does it match, are you sure?
-int equals_t(suit *s, int expected, int actual, int truth) {
-	test *t = addtest(s);
-	if((expected == actual) == truth){
+// Does it match, are you sure?
+int EqualsT(Suit *s, int expected, int actual, int truth) {
+	Test *t = addTest(s);
+	if ((expected == actual) == truth) {
 		t->pass = true;
 		return true;
 	} else {
@@ -28,13 +28,13 @@ int equals_t(suit *s, int expected, int actual, int truth) {
 	}		
 }
 
-// match a generic set of datatype's stored in two arrays.
+// Match a generic set of datatype's stored in two arrays.
 // use functions(void *, void *) as comparators. 
-int equals_a(suit *s, void *a, void *b, int n, int elmsize, 
+int EqualsA(Suit *s, void *a, void *b, int n, int elmsize, 
 	int (*callback)(void *, void*)) {
 	
 	int i, err;
-	test *t = addtest(s);
+	Test *t = addTest(s);
 	for(i = 0; i < n; i++) {
 		void *aaddr = (char *)a + i * elmsize;
 		void *baddr = (char *)b + i * elmsize;
@@ -47,14 +47,16 @@ int equals_a(suit *s, void *a, void *b, int n, int elmsize,
 	return true;
 }
 
-int integercmp(void *a, void *b) {
+// How to compare integers.
+int IntComp(void *a, void *b) {
 	int *ap = a;
 	int *bp = b;
 	
 	return *ap - *bp;
 }
 
-int stringcmp(void *a, void *b) {
+// How to compare strings.
+int StringComp(void *a, void *b) {
 	char *str1 = *(char **)a;
 	char *str2 = *(char **)b;
 	
@@ -62,38 +64,38 @@ int stringcmp(void *a, void *b) {
 }
 
 // Create a new node for our tests, add it to list.
-static test *addtest(suit *s) {
+static Test *addTest(Suit *s) {
 	int i;
-	test *node;
+	Test *node;
 	node = malloc(sizeof *node);
 	memset(node, 0, sizeof *node);
 		
-	// no need to link it if it is our first time.
-	if(s->tests == 0){
+	// No need to link it if it is our first time.
+	if (s->tests == 0) {
 		s->tests = node;		
 		node->count++;
 	} else {
-		node->prev = s->tests; // link it.
+		node->prev = s->tests; // Link it.
 		node->count = node->prev->count + 1;
-		s->tests = node; // set last test as head.
+		s->tests = node; // Set last test as head.
 	}
 	
-	s->total++; // increment.
-	return s->tests; // return head. 
+	s->total++; // Increment.
+	return s->tests; // Return head. 
 }
 
-// print a summary of the test's.
-void summary(suit* s){
+// Print a summary of the test's.
+void Summary(Suit* s) {
 	int pass = 0, fail = 0;
-	test *heads = s->tests;
+	Test *heads = s->tests;
 	
 	printf("*******TESTING********\n");
-	while(heads) {
-		if(heads->pass == true){
+	while (heads) {
+		if (heads->pass == true) {
 			pass++;
 			printf("test %d\tOK \n", heads->count);
 		}
-		else if(heads->pass == false){
+		else if (heads->pass == false) {
 			fail++;
 			printf("test %d\tFAILED \n", heads->count);
 		}

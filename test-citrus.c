@@ -4,52 +4,52 @@
 #include <string.h>
 #include "citrus.h"
 
-void testassert(suit *s);
-void testequals(suit *s);
-void testcompare(suit *s);
+static void testAssert(Suit *s);
+static void testEquals(Suit *s);
+static void testCompare(Suit *s);
 
 int main(int argc, char *argv[]) {
-	suit *sp;
+	Suit *sp;
 	
 	// allocate memory.
 	sp = malloc(sizeof *sp);
 	memset(sp, 0, sizeof *sp);
 	
 	// run tests.
-	testassert(sp);
-	testequals(sp);
-	testcompare(sp);
+	testAssert(sp);
+	testEquals(sp);
+	testCompare(sp);
 	
 	// view summary.
-	summary(sp);
+	Summary(sp);
 	free(sp);
 	return 0;
 }
 
-void testassert(suit *s) {
-	asserts(s, 1);
+void testAssert(Suit *s) {
+	Assert(s, 1);
 }
 
-void testequals(suit* s) {
+void testEquals(Suit* s) {
 	
-	equals(s, false, false);
-	equals(s, true, true);
-	equals(s, 100, 100);
+	Equals(s, false, false);
+	Equals(s, true, true);
+	Equals(s, 100, 100);
 	
-	equals_t(s, 5, 4, false);
+	EqualsT(s, 5, 4, false);
 	
 	int a[2] = {5, 4};
 	int b[2] = {5, 4};
 	
-	equals_a(s, &b, &a, 2, sizeof(int), integercmp);
+	EqualsA(s, &b, &a, 2, sizeof(int), IntComp);
 	
 	char *txt1[] = {"Abc", "Def", "Ghi", "Jkl"};
 	char *txt2[] = {"Abc", "Def", "Ghi", "Jkl"};
 	
-	equals_a(s, &txt2, &txt1, 4, sizeof(char *), stringcmp);
+	EqualsA(s, &txt2, &txt1, 4, sizeof(char *), StringComp);
 }
 
-void testcompare(suit *s) {
+static void testCompare(Suit *s) {
 	int int1, int2;
 	char *txt1, *txt2;
 	
@@ -60,20 +60,20 @@ void testcompare(suit *s) {
 	txt2 = "Abc";
 	
 	//printf(*txt1);
-	asserts(s, !stringcmp(&txt1, &txt2));
+	Assert(s, !StringComp(&txt1, &txt2));
 	
 	txt1 = "Abc";
 	txt2 = "Cbc";
 	
-	asserts(s, stringcmp(&txt1, &txt2) == -2); // A:65 - C:67 = -2
+	Assert(s, StringComp(&txt1, &txt2) == -2); // A:65 - C:67 = -2
 	
 	int1 = 0;
 	int2 = 0;
 	
-	asserts(s, integercmp(&int1, &int2) == 0);
+	Assert(s, IntComp(&int1, &int2) == 0);
 	
 	int1 = 0;
 	int2 = 1;
 	
-	asserts(s, integercmp(&int1, &int2) == -1); // 0 - 1 = -1;
+	Assert(s, IntComp(&int1, &int2) == -1); // 0 - 1 = -1;
 }
