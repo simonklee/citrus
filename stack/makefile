@@ -2,11 +2,10 @@ PROJECTNAME=citrus-stack
 
 # Project sourcefiles
 PRJSRC=../citrus.c\
-	../citrus.h\
 	test-stack.c\
 	stack.c\
-	stack.h\
 
-# Doesnt seem to work as intended	
-CFLAGS=-I ../../citrus/ 
+
+# Doesnt seem to work.
+CFLAGS=-I ../
 include ../make
