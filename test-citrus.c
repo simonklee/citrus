@@ -9,20 +9,43 @@ static void testEquals(Suit *s);
 static void testCompare(Suit *s);
 
 int main(int argc, char *argv[]) {
-	Suit *sp;
+	Suit *sp, sp_;
 	
 	// allocate memory.
-	sp = malloc(sizeof *sp);
-	memset(sp, 0, sizeof *sp);
+	sp = malloc(sizeof (Suit *));
+	//memset(sp, 0, sizeof *sp);
 	
+	sp_.total = 0;
+	//sp=&sp_;
+	
+	printf("sizeof(int) %d\n", sizeof(int));
+	printf("sizeof(sp_.total) %d\n", sizeof(sp_.total));
+	printf("sizeof(Test) %d\n", sizeof(Test *));	
+	printf("sizeof(Suit) %d\n", sizeof(Suit));
+	printf("sizeof(Suit *) %d\n", sizeof(Suit *));
+	printf("sizeof(sp->total) %d\n", sizeof(sp->total));	
+	printf("sizeof(&sp->total) %d\n", sizeof(&sp->total));	
+	printf("sizeof(sp->tests) %d\n", sizeof(sp->tests));	
+	printf("sizeof(&sp->tests) %d\n", sizeof(&sp->tests));	
+	/*printf("&sp_\n");
+	printf("%p\n", &sp_);
+	printf("%p\n", &sp_.total);
+	printf("%p\n", &sp_.tests);*/
+	printf("*sp\n");
+	printf("%p\n", sp);
+	printf("%p\n", &sp->total);
+	printf("%p\n", &sp->tests);
+//	Assert(sp, 1);
+	
+//	printf("%p\n", &sp->tests->pass);
 	// run tests.
-	testAssert(sp);
-	testEquals(sp);
-	testCompare(sp);
+	//testAssert(sp);
+	//testEquals(sp);
+	//testCompare(sp);
 	
 	// view summary.
-	Summary(sp);
-	free(sp);
+	//Summary(sp);
+//	free(sp);
 	return 0;
 }
 

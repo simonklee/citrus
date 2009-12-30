@@ -35,10 +35,10 @@ int EqualsA(Suit *s, void *a, void *b, int n, int elmsize,
 	
 	int i, err;
 	Test *t = addTest(s);
-	for(i = 0; i < n; i++) {
+	for (i = 0; i < n; i++) {
 		void *aaddr = (char *)a + i * elmsize;
 		void *baddr = (char *)b + i * elmsize;
-		if((err = callback(aaddr, baddr)) != 0){
+		if ((err = callback(aaddr, baddr)) != 0){
 			t->pass = false;
 			return false;
 		}
@@ -65,7 +65,6 @@ int StringComp(void *a, void *b) {
 
 // Create a new node for our tests, add it to list.
 static Test *addTest(Suit *s) {
-	int i;
 	Test *node;
 	node = malloc(sizeof *node);
 	memset(node, 0, sizeof *node);

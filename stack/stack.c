@@ -34,7 +34,7 @@ void StackPop(Stack *s, void *elemAddr) {
 }
 
 static void stackGrow(Stack *s) {
-	s->allocLenght *=2;
+	s->allocLenght *= 2;
 	s->elems = realloc(s->elems, s->allocLenght * s->elemSize);
 	assert(s->elems != NULL);
 }

@@ -32,6 +32,6 @@ int main(int argc, char *argv[]) {
 	
 	// Write summary.
 	Summary(suit);
-	
+	free(suit);
 	return 0;
 }
