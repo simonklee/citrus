@@ -1,11 +1,7 @@
-PROJECTNAME=citrus-stack
-
 # Project sourcefiles
-PRJSRC=../citrus.c\
-	test-stack.c\
+TESTSRC=test-stack.c\
 	stack.c\
 
+all:
+	gcc -Wall -L/opt/lib -lcitrus $(TESTSRC) -o stack-test.out
 
-# Doesnt seem to work.
-CFLAGS=-I ../
-include ../make

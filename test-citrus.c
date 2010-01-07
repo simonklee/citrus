@@ -1,8 +1,7 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "citrus.h"
+#include <citrus.h>
 
 static void testAssert(Suit *s);
 static void testEquals(Suit *s);
@@ -63,8 +62,8 @@ static void testCompare(Suit *s) {
 	
 	txt1 = "Abc";
 	txt2 = "Cbc";
-	
-	Assert(s, StringComp(&txt1, &txt2) == -2); // A:65 - C:67 = -2
+
+	Assert(s, StringComp(&txt1, &txt2) == -1); // less then equal to = -1
 	
 	int1 = 0;
 	int2 = 0;
