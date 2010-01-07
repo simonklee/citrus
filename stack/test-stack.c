@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <citrus.h>
 #include "stack.h"
-#include "../citrus.h"
 
 int main(int argc, char *argv[]) {
 	int top, i, *ip;
