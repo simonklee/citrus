@@ -1,8 +1,5 @@
 citrus
 ======
-
-description
------------
 A small testing API for my c projects.
 Some comparison functions and a limited range
 of support if a test fails.
