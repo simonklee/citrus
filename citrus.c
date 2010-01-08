@@ -4,20 +4,20 @@
 #include "citrus.h"
 
 // (member) functions.
-static Test *addTest(Suit *s);
+static Test *addTest(Suite *s);
 
 // Is it true?
-int Assert(Suit *s, int value) {
+int Assert(Suite *s, int value) {
 	return EqualsT(s, true, value, true);
 }
 
 // Does it match?
-int Equals(Suit *s, int expected, int actual) {
+int Equals(Suite *s, int expected, int actual) {
 	return EqualsT(s, expected, actual, true);
 }
 
 // Does it match, are you sure?
-int EqualsT(Suit *s, int expected, int actual, int truth) {
+int EqualsT(Suite *s, int expected, int actual, int truth) {
 	Test *t = addTest(s);
 	if ((expected == actual) == truth) {
 		t->pass = true;
@@ -30,7 +30,7 @@ int EqualsT(Suit *s, int expected, int actual, int truth) {
 
 // Match a generic set of datatype's stored in two arrays.
 // use functions(void *, void *) as comparators. 
-int EqualsA(Suit *s, void *a, void *b, int n, int elmsize, 
+int EqualsA(Suite *s, void *a, void *b, int n, int elmsize, 
 	int (*callback)(void *, void*)) {
 	
 	int i, err;
@@ -64,7 +64,7 @@ int StringComp(void *a, void *b) {
 }
 
 // Create a new node for our tests, add it to list.
-static Test *addTest(Suit *s) {
+static Test *addTest(Suite *s) {
 	Test *node;
 	node = malloc(sizeof *node);
 	memset(node, 0, sizeof *node);
@@ -84,7 +84,7 @@ static Test *addTest(Suit *s) {
 }
 
 // Print a summary of the test's.
-void Summary(Suit* s) {
+void Summary(Suite* s) {
 	int pass = 0, fail = 0;
 	Test *heads = s->tests;
 	

@@ -14,15 +14,15 @@ typedef struct Test {
 typedef struct {
 	struct Test *tests;
 	int total;
-} Suit;
+} Suite;
 
 // functions.
-int Assert(Suit *s, int value);
-int Equals(Suit *s, int expected, int actual);
-int EqualsT(Suit *s, int expected, int actual, int truth);
-int EqualsA(Suit *s, void *a, void *b, int n, int elmsize, 
+int Assert(Suite *s, int value);
+int Equals(Suite *s, int expected, int actual);
+int EqualsT(Suite *s, int expected, int actual, int truth);
+int EqualsA(Suite *s, void *a, void *b, int n, int elmsize, 
 			int (*callback)(void *, void*));
-void Summary(Suit *s);	
+void Summary(Suite *s);	
 
 // functions, helpers.	
 int IntComp(void *a, void *b);

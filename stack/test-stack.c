@@ -5,20 +5,20 @@
 #include "stack.h"
 
 int main(int argc, char *argv[]) {
-	int top, i, *ip;
+	int top, i;
 	Stack stack;
-	Suit *suit;
+	Suite *suite;
 	
 	// Allocate memory.
-	suit = malloc(sizeof *suit);
-	memset(suit, 0, sizeof *suit);
+	suite = malloc(sizeof *suite);
+	memset(suite, 0, sizeof *suite);
 	StackNew(&stack, sizeof(int));
 	
 	// Test Push, Pop.
 	top = 99;
 	StackPush(&stack, &top);
 	StackPop(&stack, &i);
-	Equals(suit, i, 99);
+	Equals(suite, i, 99);
 	
 	// Test Pushing 99 times.
 	top = 99;
@@ -28,10 +28,10 @@ int main(int argc, char *argv[]) {
 			StackPop(&stack, &top);
 		}
 	}
-	Equals(suit, top, 99);
+	Equals(suite, top, 99);
 	
 	// Write summary.
-	Summary(suit);
-	free(suit);
+	Summary(suite);
+	free(suite);
 	return 0;
 }

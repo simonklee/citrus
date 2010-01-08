@@ -3,33 +3,33 @@
 #include <string.h>
 #include <citrus.h>
 
-static void testAssert(Suit *s);
-static void testEquals(Suit *s);
-static void testCompare(Suit *s);
+static void testAssert(Suite *s);
+static void testEquals(Suite *s);
+static void testCompare(Suite *s);
 
 int main(int argc, char *argv[]) {
-	Suit *sp;
+	Suite *suite;
 	
 	// allocate memory.
-	sp = malloc(sizeof (Suit *));
-	memset(sp, 0, sizeof *sp);
+	suite = malloc(sizeof (Suite *));
+	memset(suite, 0, sizeof *suite);
 
 	// run tests.
-	testAssert(sp);
-	testEquals(sp);
+	testAssert(suite);
+	testEquals(suite);
 	testCompare(sp);
 	
 	// view summary.
-	Summary(sp);
-	free(sp);
+	Summary(suite);
+	free(suite);
 	return 0;
 }
 
-void testAssert(Suit *s) {
+void testAssert(Suite *s) {
 	Assert(s, 1);
 }
 
-void testEquals(Suit* s) {
+void testEquals(Suite* s) {
 	
 	Equals(s, false, false);
 	Equals(s, true, true);
@@ -48,7 +48,7 @@ void testEquals(Suit* s) {
 	EqualsA(s, &txt2, &txt1, 4, sizeof(char *), StringComp);
 }
 
-static void testCompare(Suit *s) {
+static void testCompare(Suite *s) {
 	int int1, int2;
 	char *txt1, *txt2;
 	
