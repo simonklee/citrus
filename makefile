@@ -1,4 +1,6 @@
 # Makefile Used to install a citrus as shared library
+# Prerequisite mkdir /opt/lib and add /opt/lib to /etc/ld.so.conf
+
 PRJNAME=citrus
 
 # Project sourcefiles

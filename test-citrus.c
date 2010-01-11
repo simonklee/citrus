@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	// run tests.
 	testAssert(suite);
 	testEquals(suite);
-	testCompare(sp);
+	testCompare(suite);
 	
 	// view summary.
 	Summary(suite);
